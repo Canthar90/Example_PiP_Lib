@@ -6,9 +6,14 @@ from fpdf import FPDF
 from pathlib import Path
 
 
-def generare(invoices_path, pdfs_path, image_path,  product_id, 
+def generate(invoices_path, pdfs_path, image_path,  product_id, 
              product_name, amount_purchased, price_per_unit, 
              total_price):
+    """
+        This function converts Excel files to PDF invoices
+        
+    """
+    
     filepaths = glob.glob(f"{invoices_path}/*.xlsx")
 
     for filepath in filepaths:
@@ -66,5 +71,7 @@ def generare(invoices_path, pdfs_path, image_path,  product_id,
         pdf.cell(w=25, h=8, txt=f"PythonHow")
         pdf.image(image_path, w=10)
 
-        os.makedirs(pdfs_path)
+
+        if not os.path.exists(pdfs_path):
+            os.makedirs(pdfs_path)
         pdf.output(f"{pdfs_path}/{filename}.pdf")
